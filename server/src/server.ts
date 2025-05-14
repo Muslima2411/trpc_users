@@ -1,15 +1,21 @@
-import "dotenv/config";
+import { createContext } from './context.ts';
 import { createHTTPServer } from "@trpc/server/adapters/standalone";
 import { appRouter } from "./approuter.ts";
-import { createContext } from "./context.ts";
+import cors from 'cors';
 
-const PORT = process.env.PORT || 4000;
+
+const PORT = 4000;
+
 
 const server = createHTTPServer({
-  router: appRouter,
-  createContext
-});
+    router: appRouter,
+    createContext,
+    middleware: cors()
+})
+
+
 
 server.listen(PORT, () => {
-  console.log("Server is running on http://localhost:", PORT);
-});
+    console.log(`server is running on port ${PORT}`);
+    
+})
